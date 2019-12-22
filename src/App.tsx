@@ -13,8 +13,8 @@ class App extends Component {
         <Suspense fallback={<div>Loading...</div>}>
           <Switch>
             <Route path="/blog" component={BlogPage} />
-            <Route path="/org" component={Org} />
             <Route path="/account" component={AccountPage} />
+            <Route path="/:userName" component={Org} />
             <Route exact={true} path="/" component={HomePage} />
           </Switch>
         </Suspense>

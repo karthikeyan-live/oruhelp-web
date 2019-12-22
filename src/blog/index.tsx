@@ -7,14 +7,15 @@ import {
 } from "react-router-dom";
 
 import Blog from "./containers/blog";
+import BlogHome from "./containers/blog-home";
 
 export default function Index() {
   let { path } = useRouteMatch();
   return (
     <Router>
       <Switch>
-        <Route exact path={`${path}/:id`} component={Blog} />
-        <Route exact path={path} component={Blog} />
+        <Route exact path={`${path}/:blogId`} component={Blog} />
+        <Route exact path={path} component={BlogHome} />
       </Switch>
     </Router>
   );

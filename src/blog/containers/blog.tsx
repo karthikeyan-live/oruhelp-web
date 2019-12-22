@@ -7,6 +7,6 @@ import {
 } from "react-router-dom";
 
 export default function Blog() {
-  let { id } = useParams();
-  return <h1>{`Blog ${id}`}</h1>;
+  let { userName, blogId } = useParams();
+  return <h1>{`Blog ${userName} - ${blogId}`}</h1>;
 }
