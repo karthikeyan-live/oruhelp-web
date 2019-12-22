@@ -1,0 +1,65 @@
+{
+  "name": "ngo-chat",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.6.0",
+    "@material-ui/icons": "^4.5.1",
+    "@types/jest": "24.0.11",
+    "@types/node": "11.13.2",
+    "@types/react": "16.8.13",
+    "@types/react-dom": "16.8.3",
+    "@types/react-router-dom": "^5.1.2",
+    "express": "^4.17.1",
+    "firebase": "^5.11.1",
+    "firebase-tools": "^6.6.0",
+    "font-awesome": "^4.7.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-ga": "^2.7.0",
+    "react-helmet": "^5.2.1",
+    "react-markdown": "^4.2.2",
+    "react-markdown-renderer": "^1.4.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "2.1.8",
+    "typescript": "3.4.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "test:coverage:ci": "react-scripts test --coverage --maxWorkers 2",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
+    "@babel/register": "^7.7.4",
+    "ignore-styles": "^5.0.1",
+    "prettier": "^1.16.4",
+    "tslint": "^5.15.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "tslint-react": "^4.0.0"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": 0
+      }
+    }
+  }
+}

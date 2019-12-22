@@ -1,0 +1,23 @@
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  useRouteMatch,
+  Switch
+} from "react-router-dom";
+
+import Login from "./login";
+import SignUp from "./signup";
+
+export default function Index() {
+  let { path } = useRouteMatch();
+  return (
+    <Router>
+      <Switch>
+        <Route exact path={`${path}/login`} component={Login} />
+        <Route exact path={`${path}/signup`} component={SignUp} />
+        <Route exact path={path} component={Login} />
+      </Switch>
+    </Router>
+  );
+}
