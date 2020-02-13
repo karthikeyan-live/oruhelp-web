@@ -14,7 +14,7 @@ import {
   CardContent,
   Typography
 } from "@material-ui/core";
-import classes from "*.module.css";
+// import classes from "*.module.css";
 
 export default function Index() {
   let { userName } = useParams();
