@@ -1,22 +1,24 @@
-import React from "react";
-import "./App.css";
+import React, { Suspense, lazy } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+const InvoicePage = lazy(() => import("./invoice"));
+const BlogPage = lazy(() => import("./blog"));
+const Org = lazy(() => import("./org"));
+const AccountPage = lazy(() => import("./account"));
+const HomePage = lazy(() => import("./home"));
 
 export function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route path="/invoice" component={InvoicePage} />
+          <Route path="/blog" component={BlogPage} />
+          <Route path="/account" component={AccountPage} />
+          <Route path="/:userName" component={Org} />
+          <Route exact={true} path="/" component={HomePage} />
+        </Switch>
+      </Suspense>
+    </Router>
   );
 }
