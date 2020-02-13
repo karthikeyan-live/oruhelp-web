@@ -1,5 +1,5 @@
 {
-  "name": "ngo-chat",
+  "name": "oruhelp-web",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -61,5 +61,7 @@
         "statements": 0
       }
     }
-  }
+  },
+  "keywords": [],
+  "description": ""
 }
