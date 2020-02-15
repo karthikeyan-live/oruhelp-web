@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { SignUpLink } from "../signup";
 import { withFirebase } from "../../common/components/Firebase";
@@ -17,45 +17,42 @@ const INITIAL_STATE = {
   password: "",
   error: null
 };
-class SignInFormBase extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { ...INITIAL_STATE };
-  }
-  onSubmit = event => {
-    const { email, password } = this.state;
-    this.props.firebase
+function SignInFormBase (props) {
+  const [userDetails, setUserDetails] = useState({ ...INITIAL_STATE });
+
+  const onSubmit = event => {
+    const { email, password } = userDetails;
+    props.firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push("/blog/123");
+        setUserDetails({...userDetails,  ...INITIAL_STATE });
+        props.history.push("/blog/123");
         console.log("Success");
       })
       .catch(error => {
-        this.setState({ error });
+        setUserDetails({ ...userDetails, error });
         console.log("Error");
       });
     event.preventDefault();
   };
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+  const onChange = event => {
+    setUserDetails({ ...userDetails, [event.target.name]: event.target.value });
   };
-  render() {
-    const { email, password, error } = this.state;
+    const { email, password, error } = userDetails;
     const isInvalid = password === "" || email === "";
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={onSubmit}>
         <input
           name="email"
           value={email}
-          onChange={this.onChange}
+          onChange={onChange}
           type="text"
           placeholder="Email Address"
         />
         <input
           name="password"
           value={password}
-          onChange={this.onChange}
+          onChange={onChange}
           type="password"
           placeholder="Password"
         />
@@ -65,7 +62,6 @@ class SignInFormBase extends Component {
         {error && <p>{error.message}</p>}
       </form>
     );
-  }
 }
 const SignInForm = withRouter(withFirebase(SignInFormBase));
 export default SignInPage;
