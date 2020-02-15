@@ -7,19 +7,12 @@ import Org from "./org";
 import Home from "./home";
 import AccountPage from "./account";
 import Navigation from "./common/components/Navigation";
+import { withFirebase } from './common/components/Firebase';
+import { withAuthentication } from './common/components/Session';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      authUser: null
-    };
-  }
-  render() {
-    return (
-      <React.Fragment>
+const App = () => (
         <Router>
-          <Navigation />
+        <Navigation />
           <Switch>
             <Route path="/invoice" component={InvoicePage} />
             <Route path="/blog" component={BlogPage} />
@@ -28,8 +21,5 @@ class App extends Component {
             <Route exact={true} path="/" component={Home} />
           </Switch>
         </Router>
-      </React.Fragment>
     );
-  }
-}
-export default App;
+    export default withAuthentication(App);

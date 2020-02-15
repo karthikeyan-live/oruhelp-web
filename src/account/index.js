@@ -8,6 +8,7 @@ import {
 
 import Login from "./login";
 import SignUp from "./signup";
+import PasswordForgetPage from "./passwordforget";
 
 export default function Index() {
   let { path } = useRouteMatch();
@@ -16,6 +17,7 @@ export default function Index() {
       <Switch>
         <Route exact path={`${path}/login`} component={Login} />
         <Route exact path={`${path}/signup`} component={SignUp} />
+        <Route exact path={`${path}/forgotpassword`} component={PasswordForgetPage} />
         <Route exact path={path} component={Login} />
       </Switch>
     </Router>
