@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { withFirebase } from "../../common/components/Firebase";
 
@@ -16,34 +16,29 @@ const INITIAL_STATE = {
   passwordTwo: "",
   error: null
 };
-
-class SignUpFormBase extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { ...INITIAL_STATE };
-  }
-  onSubmit = event => {
-    const { username, email, passwordOne } = this.state;
+function SignUpFormBase(props) {
+const [userDetails, setUserDetails] = useState({ ...INITIAL_STATE })
+  const onSubmit = event => {
+    const { username, email, passwordOne } = userDetails;
     console.log("Signing Up");
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
-        this.setState({ ...INITIAL_STATE });
+        setUserDetails({ ...INITIAL_STATE });
         this.props.history.push("/blog/123");
         console.log("Success");
       })
       .catch(error => {
-        this.setState({ error });
+        setUserDetails({ error });
         console.log("Error");
         console.log(error);
       });
     event.preventDefault();
   };
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+  const onChange = event => {
+    setUserDetails({ [event.target.name]: event.target.value });
   };
-  render() {
-    const { username, email, passwordOne, passwordTwo, error } = this.state;
+    const { username, email, passwordOne, passwordTwo, error } = userDetails;
 
     const isInvalid =
       passwordOne !== passwordTwo ||
@@ -87,7 +82,6 @@ class SignUpFormBase extends Component {
         {error && <p>{error.message}</p>}
       </form>
     );
-  }
 }
 const SignUpLink = () => (
   <p>
