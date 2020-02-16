@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { SignUpLink } from "../signup";
-
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -61,6 +60,7 @@ function SignInFormBase(props) {
   const [userDetails, setUserDetails] = useState({ ...INITIAL_STATE });
 
   const onSubmit = event => {
+    event.preventDefault();
     const { email, password } = userDetails;
     props.firebase
       .doSignInWithEmailAndPassword(email, password)
@@ -73,7 +73,6 @@ function SignInFormBase(props) {
         setUserDetails({ ...userDetails, error });
         console.log("Error");
       });
-    event.preventDefault();
   };
   const onChange = event => {
     setUserDetails({ ...userDetails, [event.target.name]: event.target.value });

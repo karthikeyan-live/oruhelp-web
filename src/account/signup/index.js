@@ -189,7 +189,7 @@ function SignUpFormBase(props) {
             {error && <p>{error.message}</p>}
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+              <Link to={"/account/login"}>
                   Already have an account? Sign in
                 </Link>
               </Grid>
