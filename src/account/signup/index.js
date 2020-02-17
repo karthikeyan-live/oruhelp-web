@@ -56,9 +56,16 @@ function SignUpFormBase(props) {
   const [userDetails, setUserDetails] = useState({ ...INITIAL_STATE });
   const onSubmit = event => {
     const { username, email, passwordOne } = userDetails;
-    console.log("Signing Up");
+    console.log(props.firebase);
     props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
+      .then(authUser => {
+        // Create a user in your Firebase realtime database
+        return props.firebase.user(authUser.user.uid).set({
+          username,
+          email
+        });
+      })
       .then(authUser => {
         setUserDetails({ ...userDetails, ...INITIAL_STATE });
         props.history.push("/blog/123");

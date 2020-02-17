@@ -129,7 +129,10 @@ const NavigationAuth = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem>
+        <Link to="/account/settings">Settings</Link>
+      </MenuItem>
+
       <SignOutButton />
     </Menu>
   );
@@ -170,7 +173,9 @@ const NavigationAuth = () => {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <Button color="inherit" to="/account/settings" component={Link}>
+          Settings
+        </Button>
       </MenuItem>
       <SignOutButton />
     </Menu>
