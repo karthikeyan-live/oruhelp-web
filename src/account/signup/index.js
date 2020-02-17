@@ -72,7 +72,7 @@ function SignUpFormBase(props) {
     event.preventDefault();
   };
   const onChange = event => {
-    setUserDetails({...userDetails, [event.target.name]: event.target.value });
+    setUserDetails({ ...userDetails, [event.target.name]: event.target.value });
   };
   const { username, email, passwordOne, passwordTwo, error } = userDetails;
 
@@ -162,7 +162,7 @@ function SignUpFormBase(props) {
                   type="password"
                   value={passwordTwo}
                   onChange={onChange}
-                  id="password"
+                  id="confirmpassword"
                   placeholder="Confirm Password"
                   autoComplete="current-password"
                 />
@@ -189,7 +189,7 @@ function SignUpFormBase(props) {
             {error && <p>{error.message}</p>}
             <Grid container justify="flex-end">
               <Grid item>
-              <Link to={"/account/login"}>
+                <Link to={"/account/login"}>
                   Already have an account? Sign in
                 </Link>
               </Grid>

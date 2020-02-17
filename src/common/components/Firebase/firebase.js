@@ -11,7 +11,8 @@ const config = {
 };
 class Firebase {
   constructor() {
-      console.log(process.env.REACT_APP_API_KEY);
+      if(!process.env.REACT_APP_API_KEY)
+      console.log('Firebase not configured');
     app.initializeApp(config);
     this.auth = app.auth();
   }

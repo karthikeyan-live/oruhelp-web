@@ -19,6 +19,7 @@ import { withFirebase } from "../../common/components/Firebase";
 import { PasswordForgetLink } from "../passwordforget";
 
 function Copyright() {
+  console.log('Login hit');
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
