@@ -19,7 +19,7 @@ import { withFirebase } from "../../common/components/Firebase";
 import { PasswordForgetLink } from "../passwordforget";
 
 function Copyright() {
-  console.log('Login hit');
+  console.log("Login hit");
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
@@ -84,76 +84,74 @@ function SignInFormBase(props) {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <form className={classes.form} onSubmit={onSubmit}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              value={email}
-              onChange={onChange}
-              type="text"
-              placeholder="Email Address"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              name="password"
-              value={password}
-              onChange={onChange}
-              placeholder="Password"
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            {error && <p>{error.message}</p>}
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              disabled={isInvalid}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <PasswordForgetLink />
-              </Grid>
-              <Grid item>
-                <SignUpLink />
-              </Grid>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <form className={classes.form} onSubmit={onSubmit}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            value={email}
+            onChange={onChange}
+            type="text"
+            placeholder="Email Address"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+          />
+          <TextField
+            name="password"
+            value={password}
+            onChange={onChange}
+            placeholder="Password"
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+          {error && <p>{error.message}</p>}
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            disabled={isInvalid}
+          >
+            Sign In
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <PasswordForgetLink />
             </Grid>
-          </form>
-        </div>
-        <Box mt={8}>
-          <Copyright />
-        </Box>
-      </Container>
-    </React.Fragment>
+            <Grid item>
+              <SignUpLink />
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
+    </Container>
   );
 }
 const SignInForm = withRouter(withFirebase(SignInFormBase));
