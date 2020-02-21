@@ -6,8 +6,7 @@ import {
   Switch
 } from "react-router-dom";
 
-import Blog from "./containers/blog";
-import BlogHome from "./containers/blog-home";
+import Blog from "./containers/Blog";
 
 export default function Index() {
   let { path } = useRouteMatch();
@@ -15,7 +14,6 @@ export default function Index() {
     <Router>
       <Switch>
         <Route exact path={`${path}/:blogId`} component={Blog} />
-        <Route exact path={path} component={BlogHome} />
       </Switch>
     </Router>
   );

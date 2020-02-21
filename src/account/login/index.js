@@ -19,7 +19,6 @@ import { withFirebase } from "../../common/components/Firebase";
 import { PasswordForgetLink } from "../passwordforget";
 
 function Copyright() {
-  console.log("Login hit");
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
@@ -62,13 +61,13 @@ function SignInFormBase(props) {
 
   const onSubmit = event => {
     event.preventDefault();
+    //props.firebase.testMethod();
     const { email, password } = userDetails;
     props.firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         setUserDetails({ ...userDetails, ...INITIAL_STATE });
         props.history.push("/blog/123");
-        console.log("Success");
       })
       .catch(error => {
         setUserDetails({ ...userDetails, error });

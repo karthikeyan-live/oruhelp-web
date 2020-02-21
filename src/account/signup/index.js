@@ -56,15 +56,32 @@ function SignUpFormBase(props) {
   const [userDetails, setUserDetails] = useState({ ...INITIAL_STATE });
   const onSubmit = event => {
     const { username, email, passwordOne } = userDetails;
-    console.log(props.firebase);
     props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
+        console.log(authUser.user.uid, username, email);
         // Create a user in your Firebase realtime database
-        return props.firebase.user(authUser.user.uid).set({
-          username,
-          email
-        });
+        // return (
+        //   props.firebase
+        //     .usersFs(authUser.user.uid)
+        //     .add({
+        //       fullname: username,
+        //       email: username
+        //     })
+        //     // .set(
+        //     //   {
+        //     //     username,
+        //     //     email
+        //     //   },
+        //     //   { merge: true }
+        //     // )
+        //     .then(() => console.log("Signup Success"))
+        //     .catch(error => {
+        //       setUserDetails({ ...userDetails, error });
+        //       console.log("Error");
+        //       console.log(error);
+        //     })
+        // );
       })
       .then(authUser => {
         setUserDetails({ ...userDetails, ...INITIAL_STATE });

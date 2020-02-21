@@ -85,15 +85,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Navigation = () => (
+const Navigation = props => (
   <div>
     <AuthUserContext.Consumer>
-      {authUser => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
+      {authUser =>
+        authUser ? (
+          <NavigationAuth menuClick={props.menuClick} />
+        ) : (
+          <NavigationNonAuth menuClick={props.menuClick} />
+        )
+      }
     </AuthUserContext.Consumer>
   </div>
 );
 
-const NavigationAuth = () => {
+const NavigationAuth = props => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -183,13 +189,14 @@ const NavigationAuth = () => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
+            onClick={props.menuClick}
           >
             <MenuIcon />
           </IconButton>
@@ -251,17 +258,18 @@ const NavigationAuth = () => {
   );
 };
 
-const NavigationNonAuth = () => {
+const NavigationNonAuth = props => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            onClick={props.menuClick}
           >
             <MenuIcon />
           </IconButton>

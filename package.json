@@ -14,6 +14,7 @@
     "firebase": "^5.11.1",
     "firebase-tools": "^6.6.0",
     "font-awesome": "^4.7.0",
+    "markdown-to-jsx": "6.11.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-ga": "^2.7.0",
