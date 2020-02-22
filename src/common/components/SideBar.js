@@ -102,11 +102,11 @@ export default function SideBar(props) {
           </ListItemIcon>
           <ListItemText primary="Blog" />
         </ListItem>
-        <ListItem button to={"/blog/newBog"} component={Link}>
+        <ListItem button to={"/org/signup"} component={Link}>
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText primary="Settings" />
+          <ListItemText primary="Add NGO" />
         </ListItem>
       </List>
       <Divider />

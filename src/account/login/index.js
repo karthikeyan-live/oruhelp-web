@@ -99,7 +99,6 @@ function SignInFormBase(props) {
             value={email}
             onChange={onChange}
             type="text"
-            placeholder="Email Address"
             required
             fullWidth
             id="email"
@@ -112,7 +111,6 @@ function SignInFormBase(props) {
             name="password"
             value={password}
             onChange={onChange}
-            placeholder="Password"
             variant="outlined"
             margin="normal"
             required

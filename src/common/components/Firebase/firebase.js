@@ -36,59 +36,16 @@ class Firebase {
   user = uid => this.db.ref(`users/${uid}`);
   users = () => this.db.ref("users");
 
-  userFs = uid => this.fs.doc(`users/${uid}`);
-
   testMethod = () => {
-    try {
-      console.log("Test method");
-      // this.fs
-      //   .collection("users")
-      //   .add({
-      //     first: "Ada",
-      //     last: "Lovelace",
-      //     born: 1815
-      //   })
-      //   .then(function(docRef) {
-      //     console.log("Document written with ID: ", docRef.id);
-      //   })
-      //   .catch(function(error) {
-      //     console.error("Error adding document: ", error);
-      //   });
-
-      this.fs
-        .collection("account")
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            console.log(`${doc.id} => ${doc.data()}`);
-          });
-        })
-        .catch(function(error) {
-          console.error("Error adding document: ", error);
+    console.log("Test Method");
+    this.fs
+      .collection("users")
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          console.log(`${doc.id} => ${doc.data()}`);
         });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  usersFs = () => {
-    console.log("passing firestore");
-    try {
-      this.fs
-        .collection("users")
-        .add({
-          first: "Ada",
-          last: "Lovelace",
-          born: 1815
-        })
-        .then(function(docRef) {
-          console.log("Document written with ID: ", docRef.id);
-        })
-        .catch(function(error) {
-          console.error("Error adding document: ", error);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+      });
   };
 }
 export default Firebase;

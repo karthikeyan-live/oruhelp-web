@@ -45,6 +45,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const INITIAL_STATE = {
+  firstName: "",
+  lastName: "",
   username: "",
   email: "",
   passwordOne: "",
@@ -55,33 +57,24 @@ function SignUpFormBase(props) {
   const classes = useStyles();
   const [userDetails, setUserDetails] = useState({ ...INITIAL_STATE });
   const onSubmit = event => {
-    const { username, email, passwordOne } = userDetails;
+    const { username, email, firstName, lastName, passwordOne } = userDetails;
     props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
-        console.log(authUser.user.uid, username, email);
-        // Create a user in your Firebase realtime database
-        // return (
-        //   props.firebase
-        //     .usersFs(authUser.user.uid)
-        //     .add({
-        //       fullname: username,
-        //       email: username
-        //     })
-        //     // .set(
-        //     //   {
-        //     //     username,
-        //     //     email
-        //     //   },
-        //     //   { merge: true }
-        //     // )
-        //     .then(() => console.log("Signup Success"))
-        //     .catch(error => {
-        //       setUserDetails({ ...userDetails, error });
-        //       console.log("Error");
-        //       console.log(error);
-        //     })
-        // );
+        return props.firebase
+          .user(authUser.user.uid)
+          .set({
+            username,
+            email,
+            firstName,
+            lastName
+          })
+          .then(() => console.log("Signup Success"))
+          .catch(error => {
+            setUserDetails({ ...userDetails, error });
+            console.log("Error");
+            console.log(error);
+          });
       })
       .then(authUser => {
         setUserDetails({ ...userDetails, ...INITIAL_STATE });
@@ -98,7 +91,15 @@ function SignUpFormBase(props) {
   const onChange = event => {
     setUserDetails({ ...userDetails, [event.target.name]: event.target.value });
   };
-  const { username, email, passwordOne, passwordTwo, error } = userDetails;
+  const {
+    username,
+    email,
+    firstName,
+    lastName,
+    passwordOne,
+    passwordTwo,
+    error
+  } = userDetails;
 
   const isInvalid =
     passwordOne !== passwordTwo ||
@@ -122,14 +123,13 @@ function SignUpFormBase(props) {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="fname"
-                  name="username"
+                  name="firstName"
                   variant="outlined"
-                  value={username}
                   onChange={onChange}
                   type="text"
-                  placeholder="Full Name"
                   required
                   fullWidth
+                  value={firstName}
                   id="firstName"
                   label="First Name"
                   autoFocus
@@ -137,13 +137,30 @@ function SignUpFormBase(props) {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  autoComplete="lname"
+                  name="lastName"
+                  variant="outlined"
+                  onChange={onChange}
+                  type="text"
+                  required
+                  fullWidth
+                  value={lastName}
+                  id="lastName"
+                  label="Last Name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
                   variant="outlined"
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="lname"
+                  value={username}
+                  onChange={onChange}
+                  id="username"
+                  label="User Name"
+                  name="username"
+                  autoComplete="username"
+                  type="text"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -158,7 +175,6 @@ function SignUpFormBase(props) {
                   name="email"
                   autoComplete="email"
                   type="text"
-                  placeholder="Email Address"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -172,7 +188,6 @@ function SignUpFormBase(props) {
                   value={passwordOne}
                   onChange={onChange}
                   id="password"
-                  placeholder="Password"
                   autoComplete="current-password"
                 />
               </Grid>
@@ -187,7 +202,6 @@ function SignUpFormBase(props) {
                   value={passwordTwo}
                   onChange={onChange}
                   id="confirmpassword"
-                  placeholder="Confirm Password"
                   autoComplete="current-password"
                 />
               </Grid>
