@@ -102,7 +102,12 @@ export default function SideBar(props) {
           </ListItemIcon>
           <ListItemText primary="Blog" />
         </ListItem>
-        <ListItem button to={"/org/signup"} component={Link}>
+        <ListItem
+          button
+          to={"/org/signup"}
+          component={Link}
+          onClick={props.handleDrawerClose}
+        >
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
