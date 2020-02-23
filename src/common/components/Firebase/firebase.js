@@ -38,14 +38,6 @@ class Firebase {
 
   testMethod = () => {
     console.log("Test Method");
-    this.fs
-      .collection("users")
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          console.log(`${doc.id} => ${doc.data()}`);
-        });
-      });
   };
 }
 export default Firebase;

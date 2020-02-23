@@ -1,14 +1,18 @@
 import React from "react";
 import { Helmet } from "react-helmet";
+import withAuthentication from "../common/components/Session/withAuthentication";
 
-export default function Index() {
+function Index(props) {
+  console.log(props);
   return (
     <React.Fragment>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>OruHelp - Home Page</title>
+        <title>Home Page</title>
       </Helmet>
       <h1>This is Home page</h1>
     </React.Fragment>
   );
 }
+
+export default withAuthentication(Index);

@@ -11,6 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import SignupDetailsForm from "./SignupDetailsForm";
 import RegisteredDetailsForm from "./RegisteredDetailsForm";
 import ContactDetailsForm from "./ContactDetailsForm";
+import { checkNgoUserName, registerNgo } from "../services/orgServices";
+import { withFirebase } from "../../common/components/Firebase";
 
 function Copyright() {
   return (
@@ -64,9 +66,10 @@ const useStyles = makeStyles(theme => ({
 
 const steps = ["Signup Details", "Registration details", "Contact Details"];
 
-export default function OrgSignUp() {
+function OrgSignUp(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [error, setError] = React.useState("Error message shows here");
   const [buttonDisabled, setButtonDisabled] = React.useState(true);
   const [ngoDetails, setNgoDetails] = React.useState({
     userName: "",
@@ -83,10 +86,24 @@ export default function OrgSignUp() {
 
   const handleNext = () => {
     if (activeStep === 0) {
-      alert("Validate User Name");
+      checkNgoUserName(props.firebase.db, ngoDetails.userName)
+        .then(res => {
+          if (res) {
+            setButtonDisabled(validate(activeStep + 1));
+            setActiveStep(activeStep + 1);
+          } else {
+            setError("User Name not available");
+          }
+        })
+        .catch(err => console.log(err));
+    } else if (activeStep === 2) {
+      registerNgo(props.firebase.db, ngoDetails)
+        .then(() => {
+          setButtonDisabled(validate(activeStep + 1));
+          setActiveStep(activeStep + 1);
+        })
+        .catch(err => console.log(err));
     }
-    setButtonDisabled(validate(activeStep + 1));
-    setActiveStep(activeStep + 1);
   };
 
   const validate = step => {
@@ -164,6 +181,7 @@ export default function OrgSignUp() {
                   (activeStep === 2 && (
                     <ContactDetailsForm {...ngoDetails} onChange={onChange} />
                   ))}
+                {error && <p>{error}</p>}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
@@ -189,3 +207,5 @@ export default function OrgSignUp() {
     </React.Fragment>
   );
 }
+
+export default withFirebase(OrgSignUp);
