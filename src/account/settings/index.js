@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { withFirebase } from "../../common/components/Firebase";
 
 class Settings extends Component {
   constructor(props) {
@@ -56,4 +55,4 @@ const UserList = ({ receivedUsers }) => {
     )
   );
 };
-export default withFirebase(Settings);
+export default Settings;

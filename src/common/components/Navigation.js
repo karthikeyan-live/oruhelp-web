@@ -18,7 +18,6 @@ import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import SignOutButton from "../../account/signout";
-import { AuthUserContext } from "../../common/components/Session";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -87,15 +86,7 @@ const useStyles = makeStyles(theme => ({
 
 const Navigation = props => (
   <div>
-    <AuthUserContext.Consumer>
-      {authUser =>
-        authUser ? (
-          <NavigationAuth menuClick={props.menuClick} />
-        ) : (
-          <NavigationNonAuth menuClick={props.menuClick} />
-        )
-      }
-    </AuthUserContext.Consumer>
+    <NavigationNonAuth menuClick={props.menuClick} />
   </div>
 );
 

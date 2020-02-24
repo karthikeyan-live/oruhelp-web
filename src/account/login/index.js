@@ -15,7 +15,6 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import { withFirebase } from "../../common/components/Firebase";
 import { PasswordForgetLink } from "../passwordforget";
 
 function Copyright() {
@@ -151,5 +150,5 @@ function SignInFormBase(props) {
     </Container>
   );
 }
-const SignInForm = withRouter(withFirebase(SignInFormBase));
+const SignInForm = withRouter(SignInFormBase);
 export default SignInForm;

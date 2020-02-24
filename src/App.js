@@ -12,7 +12,6 @@ import Home from "./home";
 import AccountPage from "./account";
 import Navigation from "./common/components/Navigation";
 import SideBar from "./common/components/SideBar";
-import { withAuthentication } from "./common/components/Session";
 
 const drawerWidth = 240;
 
@@ -112,4 +111,4 @@ function App() {
     </Router>
   );
 }
-export default withAuthentication(App);
+export default App;

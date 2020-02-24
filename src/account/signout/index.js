@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import { withFirebase } from "../../common/components/Firebase";
 
 const SignOutButton = props => {
   const signingOut = () => {
@@ -23,4 +22,4 @@ const SignOutButton = props => {
     </MenuItem>
   );
 };
-export default withRouter(withFirebase(SignOutButton));
+export default withRouter(SignOutButton);

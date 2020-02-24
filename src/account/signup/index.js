@@ -13,7 +13,11 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { withFirebase } from "../../common/components/Firebase";
+
+import {
+  doCreateUserWithEmailAndPassword,
+  signupUserDetails
+} from "../services/authentication";
 
 function Copyright() {
   return (
@@ -58,33 +62,29 @@ function SignUpFormBase(props) {
   const [userDetails, setUserDetails] = useState({ ...INITIAL_STATE });
   const onSubmit = event => {
     const { username, email, firstName, lastName, passwordOne } = userDetails;
-    props.firebase
-      .doCreateUserWithEmailAndPassword(email, passwordOne)
+    doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
-        return props.firebase
-          .user(authUser.user.uid)
-          .set({
-            username,
-            email,
-            firstName,
-            lastName
+        console.log("Success");
+        return signupUserDetails(authUser.user.uid, {
+          username,
+          email,
+          firstName,
+          lastName
+        })
+          .then(() => {
+            setUserDetails({ ...userDetails, ...INITIAL_STATE });
+            props.history.push("/blog/123");
           })
-          .then(() => console.log("Signup Success"))
           .catch(error => {
-            setUserDetails({ ...userDetails, error });
-            console.log("Error");
-            console.log(error);
+            console.log(
+              "TODO: Notify that additional details were not registered"
+            );
+            setUserDetails({ ...userDetails, ...INITIAL_STATE });
+            props.history.push("/blog/123");
           });
       })
-      .then(authUser => {
-        setUserDetails({ ...userDetails, ...INITIAL_STATE });
-        props.history.push("/blog/123");
-        console.log("Success");
-      })
       .catch(error => {
-        setUserDetails({ ...userDetails, error });
-        console.log("Error");
-        console.log(error);
+        console.log("TODO: Failure in creating user; ask to try again");
       });
     event.preventDefault();
   };
@@ -246,6 +246,6 @@ const SignUpLink = () => (
     Don't have an account? <Link to={"/account/signup"}>Sign Up</Link>
   </p>
 );
-const SignUpForm = withRouter(withFirebase(SignUpFormBase));
+const SignUpForm = withRouter(SignUpFormBase);
 export default SignUpForm;
 export { SignUpLink };

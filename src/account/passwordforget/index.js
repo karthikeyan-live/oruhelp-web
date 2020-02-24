@@ -10,7 +10,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { withFirebase } from "../../common/components/Firebase";
 
 function Copyright() {
   console.log("Login hit");
@@ -120,6 +119,6 @@ const PasswordForgetLink = () => (
     <Link to={"/account/forgotpassword"}>Forgot Password?</Link>
   </p>
 );
-const PasswordForgetForm = withFirebase(PasswordForgetFormBase);
+const PasswordForgetForm = PasswordForgetFormBase;
 export default PasswordForgetForm;
 export { PasswordForgetLink };

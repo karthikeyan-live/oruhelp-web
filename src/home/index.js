@@ -1,6 +1,5 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import withAuthentication from "../common/components/Session/withAuthentication";
 
 function Index(props) {
   console.log(props);
@@ -15,4 +14,4 @@ function Index(props) {
   );
 }
 
-export default withAuthentication(Index);
+export default Index;

@@ -1,5 +1,5 @@
-export const checkNgoUserName = (db, userName) => {
-  return db
+export const checkNgoUserName = (firebase, userName) => {
+  return firebase.db
     .ref(`ngos/` + userName)
     .once("value")
     .then(function(snapshot) {
@@ -11,21 +11,17 @@ export const checkNgoUserName = (db, userName) => {
     });
 };
 
-export const registerNgo = (db, ngoDetails) => {
-  console.log("Registering NGO");
-  return db
-    .ref("ngos/" + ngoDetails.userName)
-    .set({
-      ngoName: ngoDetails.ngoName,
-      uniqueId: ngoDetails.uniqueId,
-      registrationNo: ngoDetails.registrationNo,
-      registeredDate: ngoDetails.registeredDate,
-      registeredState: ngoDetails.registeredState,
-      contactName: ngoDetails.contactName,
-      telephone: ngoDetails.telephone,
-      mobile: ngoDetails.mobile,
-      address: ngoDetails.address
-    })
-    .then(() => console.log("NGO added"))
-    .catch(err => console.log(err));
+export const registerNgo = (firebase, ngoDetails) => {
+  return firebase.db.ref("ngos/" + ngoDetails.userName).set({
+    ngoName: ngoDetails.ngoName,
+    uniqueId: ngoDetails.uniqueId,
+    registrationNo: ngoDetails.registrationNo,
+    registeredDate: ngoDetails.registeredDate,
+    registeredState: ngoDetails.registeredState,
+    contactName: ngoDetails.contactName,
+    telephone: ngoDetails.telephone,
+    mobile: ngoDetails.mobile,
+    address: ngoDetails.address,
+    ownerUid: firebase.auth.currentUser.uid
+  });
 };

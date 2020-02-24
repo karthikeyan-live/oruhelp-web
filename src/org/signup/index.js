@@ -12,7 +12,6 @@ import SignupDetailsForm from "./SignupDetailsForm";
 import RegisteredDetailsForm from "./RegisteredDetailsForm";
 import ContactDetailsForm from "./ContactDetailsForm";
 import { checkNgoUserName, registerNgo } from "../services/orgServices";
-import { withFirebase } from "../../common/components/Firebase";
 
 function Copyright() {
   return (
@@ -69,7 +68,7 @@ const steps = ["Signup Details", "Registration details", "Contact Details"];
 function OrgSignUp(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [error, setError] = React.useState("Error message shows here");
+  const [error, setError] = React.useState("");
   const [buttonDisabled, setButtonDisabled] = React.useState(true);
   const [ngoDetails, setNgoDetails] = React.useState({
     userName: "",
@@ -86,7 +85,7 @@ function OrgSignUp(props) {
 
   const handleNext = () => {
     if (activeStep === 0) {
-      checkNgoUserName(props.firebase.db, ngoDetails.userName)
+      checkNgoUserName(props.firebase, ngoDetails.userName)
         .then(res => {
           if (res) {
             setButtonDisabled(validate(activeStep + 1));
@@ -96,8 +95,11 @@ function OrgSignUp(props) {
           }
         })
         .catch(err => console.log(err));
+    } else if (activeStep === 1) {
+      setButtonDisabled(validate(activeStep + 1));
+      setActiveStep(activeStep + 1);
     } else if (activeStep === 2) {
-      registerNgo(props.firebase.db, ngoDetails)
+      registerNgo(props.firebase, ngoDetails)
         .then(() => {
           setButtonDisabled(validate(activeStep + 1));
           setActiveStep(activeStep + 1);
@@ -208,4 +210,4 @@ function OrgSignUp(props) {
   );
 }
 
-export default withFirebase(OrgSignUp);
+export default OrgSignUp;
