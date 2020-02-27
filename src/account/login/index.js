@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { SignUpLink } from "../signup";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -14,7 +12,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { doSignInWithEmailAndPassword } from "../services/authentication";
 
+import ButtonLoader from "../../common/components/ButtonLoader";
 import { PasswordForgetLink } from "../passwordforget";
 
 function Copyright() {
@@ -57,20 +57,22 @@ const INITIAL_STATE = {
 };
 function SignInFormBase(props) {
   const [userDetails, setUserDetails] = useState({ ...INITIAL_STATE });
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = event => {
     event.preventDefault();
-    //props.firebase.testMethod();
+    setLoading(true);
     const { email, password } = userDetails;
-    props.firebase
-      .doSignInWithEmailAndPassword(email, password)
+    doSignInWithEmailAndPassword(email, password)
       .then(() => {
         setUserDetails({ ...userDetails, ...INITIAL_STATE });
+        setLoading(false);
         props.history.push("/blog/123");
       })
       .catch(error => {
         setUserDetails({ ...userDetails, error });
-        console.log("Error");
+        setLoading(false);
+        console.log("Error", error);
       });
   };
   const onChange = event => {
@@ -83,7 +85,6 @@ function SignInFormBase(props) {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -123,17 +124,21 @@ function SignInFormBase(props) {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          {error && <p>{error.message}</p>}
-          <Button
+          {error && (
+            <Typography variant="body2" gutterBottom color="error">
+              {error.message}
+            </Typography>
+          )}
+          <ButtonLoader
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
             disabled={isInvalid}
-          >
-            Sign In
-          </Button>
+            value="Sign In"
+            loading={loading}
+          />
           <Grid container>
             <Grid item xs>
               <PasswordForgetLink />

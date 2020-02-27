@@ -10,3 +10,15 @@ export const signupUserDetails = (uid, userDetails) => {
     .doc(uid)
     .set({ ...userDetails });
 };
+
+// signin
+
+export const doSignInWithEmailAndPassword = (email, password) =>
+  auth.signInWithEmailAndPassword(email, password);
+
+// signout
+export const doSignOut = () => auth.signOut();
+
+// Password Reset
+
+export const doPasswordReset = email => auth.sendPasswordResetEmail(email);

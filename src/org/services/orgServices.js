@@ -1,27 +1,25 @@
-export const checkNgoUserName = (firebase, userName) => {
-  return firebase.db
-    .ref(`ngos/` + userName)
-    .once("value")
-    .then(function(snapshot) {
-      if (snapshot.exists()) {
+import { fs } from "../../common/services/firebase";
+
+export const checkNgoUserName = userName => {
+  var docRef = fs.collection("ngos").doc(userName);
+
+  return docRef
+    .get()
+    .then(function(doc) {
+      if (doc.exists) {
         return false;
       } else {
         return true;
       }
+    })
+    .catch(function(error) {
+      console.log("Error getting document:", error);
     });
 };
 
-export const registerNgo = (firebase, ngoDetails) => {
-  return firebase.db.ref("ngos/" + ngoDetails.userName).set({
-    ngoName: ngoDetails.ngoName,
-    uniqueId: ngoDetails.uniqueId,
-    registrationNo: ngoDetails.registrationNo,
-    registeredDate: ngoDetails.registeredDate,
-    registeredState: ngoDetails.registeredState,
-    contactName: ngoDetails.contactName,
-    telephone: ngoDetails.telephone,
-    mobile: ngoDetails.mobile,
-    address: ngoDetails.address,
-    ownerUid: firebase.auth.currentUser.uid
-  });
+export const registerNgo = ngoDetails => {
+  return fs
+    .collection("ngos")
+    .doc(ngoDetails.userName)
+    .set({ ...ngoDetails });
 };

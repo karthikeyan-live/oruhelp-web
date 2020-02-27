@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -18,6 +18,8 @@ import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import SignOutButton from "../../account/signout";
+
+import { auth } from "../services/firebase";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -84,11 +86,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Navigation = props => (
-  <div>
+const Navigation = props => {
+  const [user, setUser] = useState(null);
+  auth.onAuthStateChanged(getUser => {
+    setUser(getUser);
+  });
+  return user ? (
+    <NavigationAuth menuClick={props.menuClick} />
+  ) : (
     <NavigationNonAuth menuClick={props.menuClick} />
-  </div>
-);
+  );
+};
 
 const NavigationAuth = props => {
   const classes = useStyles();
@@ -179,7 +187,7 @@ const NavigationAuth = props => {
   );
 
   return (
-    <div className={classes.grow}>
+    <div>
       <AppBar position="fixed">
         <Toolbar>
           <IconButton
@@ -192,7 +200,7 @@ const NavigationAuth = props => {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
+            News
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -252,7 +260,7 @@ const NavigationAuth = props => {
 const NavigationNonAuth = props => {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <div>
       <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6" className={classes.root}>

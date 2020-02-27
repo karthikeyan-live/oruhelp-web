@@ -10,6 +10,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+
+import { doPasswordReset } from "../services/authentication";
 
 function Copyright() {
   console.log("Login hit");
@@ -55,8 +58,7 @@ function PasswordForgetFormBase(props) {
   const onSubmit = event => {
     event.preventDefault();
     const { email } = userDetails;
-    props.firebase
-      .doPasswordReset(email)
+    doPasswordReset(email)
       .then(() => {
         setUserDetails({ ...userDetails, ...INITIAL_STATE });
       })
@@ -78,7 +80,7 @@ function PasswordForgetFormBase(props) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Reset Password
         </Typography>
         <form className={classes.form} onSubmit={onSubmit}>
           <TextField
@@ -106,6 +108,11 @@ function PasswordForgetFormBase(props) {
           >
             Reset My Password
           </Button>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link to={"/account/login"}>Sign in</Link>
+            </Grid>
+          </Grid>
         </form>
       </div>
       <Box mt={8}>

@@ -85,7 +85,7 @@ function OrgSignUp(props) {
 
   const handleNext = () => {
     if (activeStep === 0) {
-      checkNgoUserName(props.firebase, ngoDetails.userName)
+      checkNgoUserName(ngoDetails.userName)
         .then(res => {
           if (res) {
             setButtonDisabled(validate(activeStep + 1));
@@ -99,7 +99,7 @@ function OrgSignUp(props) {
       setButtonDisabled(validate(activeStep + 1));
       setActiveStep(activeStep + 1);
     } else if (activeStep === 2) {
-      registerNgo(props.firebase, ngoDetails)
+      registerNgo(ngoDetails)
         .then(() => {
           setButtonDisabled(validate(activeStep + 1));
           setActiveStep(activeStep + 1);
@@ -148,7 +148,7 @@ function OrgSignUp(props) {
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
-            NGO Registration
+            Registration
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map(label => (

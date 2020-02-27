@@ -14,6 +14,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+import ButtonLoader from "../../common/components/ButtonLoader";
+
 import {
   doCreateUserWithEmailAndPassword,
   signupUserDetails
@@ -60,7 +62,9 @@ const INITIAL_STATE = {
 function SignUpFormBase(props) {
   const classes = useStyles();
   const [userDetails, setUserDetails] = useState({ ...INITIAL_STATE });
+  const [loading, setLoading] = useState(false);
   const onSubmit = event => {
+    setLoading(true);
     const { username, email, firstName, lastName, passwordOne } = userDetails;
     doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
@@ -73,6 +77,7 @@ function SignUpFormBase(props) {
         })
           .then(() => {
             setUserDetails({ ...userDetails, ...INITIAL_STATE });
+            setLoading(false);
             props.history.push("/blog/123");
           })
           .catch(error => {
@@ -80,10 +85,12 @@ function SignUpFormBase(props) {
               "TODO: Notify that additional details were not registered"
             );
             setUserDetails({ ...userDetails, ...INITIAL_STATE });
+            setLoading(false);
             props.history.push("/blog/123");
           });
       })
       .catch(error => {
+        setLoading(false);
         console.log("TODO: Failure in creating user; ask to try again");
       });
     event.preventDefault();
@@ -214,17 +221,20 @@ function SignUpFormBase(props) {
                 />
               </Grid>
             </Grid>
-            <Button
+            <ButtonLoader
               disabled={isInvalid}
+              value="Sign Up"
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
+              loading={loading}
               className={classes.submit}
-            >
-              Sign Up
-            </Button>
-            {error && <p>{error.message}</p>}
+            />
+            <Typography variant="body2" gutterBottom color="error">
+              {error && error.message}
+            </Typography>
+
             <Grid container justify="flex-end">
               <Grid item>
                 <Link to={"/account/login"}>
@@ -243,7 +253,7 @@ function SignUpFormBase(props) {
 }
 const SignUpLink = () => (
   <p>
-    Don't have an account? <Link to={"/account/signup"}>Sign Up</Link>
+    <Link to={"/account/signup"}>Don't have an account? Sign Up</Link>
   </p>
 );
 const SignUpForm = withRouter(SignUpFormBase);
